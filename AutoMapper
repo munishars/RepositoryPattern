@@ -1,0 +1,60 @@
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using AutoMapper;
+
+namespace AutoMapperSample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var program = new Program();
+            Mapper.CreateMap<Customer, CustomerViewItem>();
+            program.Run();
+        }
+
+
+        private void Run()
+        {
+            Customer Customer = GetCustomerFromDB();
+
+            // CustomerViewItem CustomerViewItem = GetCustomerFromDB(); -Its Not Possible so we are move to Automapper concept.
+
+            CustomerViewItem customerViewItem = Mapper.Map<Customer, CustomerViewItem>(Customer);
+
+
+        }
+
+
+        private Customer GetCustomerFromDB()
+        {
+            return new Customer()
+            {
+                DateOfBirth = new DateTime(1987, 11, 2),
+                FirstName = "Andriy",
+                LastName = "Buday",
+                NumberOfOrders = 7
+            };
+        }
+    }
+    public class Customer
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+
+        public int NumberOfOrders { get; set; }
+    }
+
+    public class CustomerViewItem
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+
+        public int NumberOfOrders { get; set; }
+    }
+}
